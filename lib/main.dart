@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'di/service_locator.dart';
+import 'features/items/presentation/bloc/items_bloc.dart';
+import 'features/items/presentation/items_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupLocator();
+
   runApp(const MyApp());
 }
 
@@ -15,7 +23,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: BlocProvider(
+        create: (context) => locator<ItemsBloc>()
+          ..add(
+            const ItemsEventGetItems(),
+          ),
+        child: const ItemsPage(),
+      ),
     );
   }
 }
