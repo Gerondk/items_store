@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/items_bloc.dart';
+import 'items_element.dart';
 
 class ItemsPage extends StatelessWidget {
   const ItemsPage({super.key});
@@ -22,8 +23,10 @@ class ItemsPage extends StatelessWidget {
             return ListView.builder(
               itemCount: state.items.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(state.items[index].title),
+                return ItemsElement(
+                  title: state.items[index].title,
+                  description: state.items[index].description,
+                  imageUrl: state.items[index].images.first,
                 );
               },
             );
