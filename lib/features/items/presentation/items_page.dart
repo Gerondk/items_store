@@ -23,10 +23,12 @@ class ItemsPage extends StatelessWidget {
             return ListView.builder(
               itemCount: state.items.length,
               itemBuilder: (context, index) {
+                final item = state.items[index];
                 return ItemsElement(
-                  title: state.items[index].title,
-                  description: state.items[index].description,
-                  imageUrl: state.items[index].images.first,
+                  itemId: item.id,
+                  title: item.title,
+                  description: item.description,
+                  imageUrl: item.images.first,
                 );
               },
             );
