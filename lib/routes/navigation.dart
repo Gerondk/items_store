@@ -6,6 +6,8 @@ import 'package:items_store/routes/routes_path.dart';
 import '../di/service_locator.dart';
 import '../features/items/presentation/bloc/items_bloc.dart';
 import '../features/items/presentation/item_detail/item_detail.dart';
+import '../features/items/presentation/item_detail/item_detail_bloc.dart';
+import '../features/items/presentation/item_detail/item_detail_event.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: RoutePath.items.path,
@@ -23,9 +25,14 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: '${RoutePath.itemDetail.path}/:itemId',
           builder: (context, state) {
-            final itemId = state.pathParameters['itemId'] ?? '';
-            print(itemId);
-            return ItemDetailPage(itemId: int.parse(itemId));
+            final itemId = state.pathParameters['itemId']!;
+            return BlocProvider(
+              create: (context) => locator<ItemDetailBloc>()
+                ..add(
+                  ItemDetailEventGetItem(itemId: int.parse(itemId)),
+                ),
+              child: const ItemDetailPage(),
+            );
           },
         ),
       ],

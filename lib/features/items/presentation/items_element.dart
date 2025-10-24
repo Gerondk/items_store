@@ -22,8 +22,9 @@ class ItemsElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context
-            .go('${RoutePath.items.path}${RoutePath.itemDetail.path}/$itemId');
+        context.push(
+          '${RoutePath.items.path}${RoutePath.itemDetail.path}/$itemId',
+        );
       },
       child: Card(
         shape: RoundedRectangleBorder(
