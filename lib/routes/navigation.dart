@@ -1,16 +1,16 @@
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:items_store/features/items/presentation/items_page.dart';
 import 'package:items_store/routes/routes_path.dart';
 
 import '../di/service_locator.dart';
-import '../features/items/presentation/bloc/items_bloc.dart';
-import '../features/items/presentation/item_detail/item_detail.dart';
-import '../features/items/presentation/item_detail/item_detail_bloc.dart';
-import '../features/items/presentation/item_detail/item_detail_event.dart';
+import '../features/items/items.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: RoutePath.items.path,
+  redirect: _redirectHandler,
   routes: <RouteBase>[
     GoRoute(
       path: RoutePath.items.path,
@@ -39,3 +39,13 @@ final GoRouter router = GoRouter(
     ),
   ],
 );
+
+// Monitor the navigation
+String? _redirectHandler(BuildContext context, GoRouterState state) {
+  final itemId = state.pathParameters['itemId'];
+  final path = state.fullPath;
+
+  log('Redirect: itemId $itemId');
+  log('Redirect: current fullPath $path');
+  return null;
+}
