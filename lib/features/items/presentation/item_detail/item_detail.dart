@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:items_store/features/items/presentation/item_detail/item_detail_bloc.dart';
@@ -10,8 +11,10 @@ class ItemDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Item Detail'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: BlocBuilder<ItemDetailBloc, ItemDetailState>(
         builder: (context, state) {
@@ -20,8 +23,63 @@ class ItemDetailPage extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else if (state is ItemDetailLoaded) {
-            return Center(
-              child: Text('Item ID: ${state.item.title}'),
+            return Column(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: state.item.images.first,
+                    fit: BoxFit.cover,
+                    height: 400,
+                    placeholder: (context, url) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    errorWidget: (context, url, error) => const Icon(
+                      Icons.error,
+                      color: Colors.red,
+                      size: 100,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    spacing: 16,
+                    children: [
+                      Text(
+                        state.item.title,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      Text(
+                        state.item.category.name,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      Text(
+                        state.item.description,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        state.item.creationDate,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(
+                        '\$${state.item.price.toString()}',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             );
           } else {
             return const Center(

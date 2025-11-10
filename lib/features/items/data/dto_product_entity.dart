@@ -1,49 +1,53 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-import 'package:items_store/generated/json/base/json_field.dart';
-import 'package:items_store/generated/json/dto_product_entity.g.dart';
-
-export 'package:items_store/generated/json/dto_product_entity.g.dart';
+part 'dto_product_entity.g.dart';
 
 @JsonSerializable()
 class DtoProductEntity {
-  late int id;
-  late String title;
-  late String slug;
-  late int price;
-  late String description;
-  late DtoProductCategory category;
-  late List<String> images;
+  final int id;
+  final String title;
+  final String slug;
+  final int price;
+  final String description;
+  final DtoProductCategory category;
+  final String creationAt;
+  final String updatedAt;
+  final List<String> images;
 
-  DtoProductEntity();
+  DtoProductEntity({
+    required this.id,
+    required this.title,
+    required this.slug,
+    required this.price,
+    required this.description,
+    required this.category,
+    required this.creationAt,
+    required this.updatedAt,
+    required this.images,
+  });
 
   factory DtoProductEntity.fromJson(Map<String, dynamic> json) =>
-      $DtoProductEntityFromJson(json);
+      _$DtoProductEntityFromJson(json);
 
-  Map<String, dynamic> toJson() => $DtoProductEntityToJson(this);
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
+  Map<String, dynamic> toJson() => _$DtoProductEntityToJson(this);
 }
 
 @JsonSerializable()
 class DtoProductCategory {
-  late int id;
-  late String name;
-  late String image;
-  late String slug;
+  final int id;
+  final String name;
+  final String image;
+  final String slug;
 
-  DtoProductCategory();
+  DtoProductCategory({
+    required this.id,
+    required this.name,
+    required this.image,
+    required this.slug,
+  });
 
   factory DtoProductCategory.fromJson(Map<String, dynamic> json) =>
-      $DtoProductCategoryFromJson(json);
+      _$DtoProductCategoryFromJson(json);
 
-  Map<String, dynamic> toJson() => $DtoProductCategoryToJson(this);
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
+  Map<String, dynamic> toJson() => _$DtoProductCategoryToJson(this);
 }

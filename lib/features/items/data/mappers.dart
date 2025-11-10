@@ -8,6 +8,9 @@ extension DtoProductEntityToItemModel on DtoProductEntity {
       title: title,
       description: description,
       price: price.toDouble(),
+      creationAt: creationAt,
+      updatedAt: updatedAt,
+      category: category,
       images: images,
     );
   }
