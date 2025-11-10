@@ -23,63 +23,68 @@ class ItemDetailPage extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else if (state is ItemDetailLoaded) {
-            return Column(
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(25),
-                    bottomRight: Radius.circular(25),
-                  ),
-                  child: CachedNetworkImage(
-                    imageUrl: state.item.images.first,
-                    fit: BoxFit.cover,
-                    height: 400,
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(),
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(25),
+                      bottomRight: Radius.circular(25),
                     ),
-                    errorWidget: (context, url, error) => const Icon(
-                      Icons.error,
-                      color: Colors.red,
-                      size: 100,
+                    child: CachedNetworkImage(
+                      imageUrl: state.item.images.first,
+                      fit: BoxFit.cover,
+                      height: 400,
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => const Icon(
+                        Icons.error,
+                        color: Colors.red,
+                        size: 100,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    spacing: 16,
-                    children: [
-                      Text(
-                        state.item.title,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      Text(
-                        state.item.category.name,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      Text(
-                        state.item.description,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      Text(
-                        state.item.creationDate,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      Text(
-                        '\$${state.item.price.toString()}',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                    ],
+                  const SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      spacing: 16,
+                      children: [
+                        Text(
+                          state.item.title,
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        Text(
+                          state.item.category.name,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        Text(
+                          state.item.description,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        Text(
+                          state.item.creationDate,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        Text(
+                          '\$${state.item.price.toString()}',
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           } else {
             return const Center(
