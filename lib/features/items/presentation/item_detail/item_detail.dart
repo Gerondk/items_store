@@ -49,6 +49,7 @@ class ItemDetailPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 16,
                       children: [
                         Text(

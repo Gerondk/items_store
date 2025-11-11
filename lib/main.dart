@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: router,
       title: 'Flutter Demo',
-      theme: ThemeData.dark(
+      darkTheme: ThemeData.dark(
         useMaterial3: true,
       ),
     );
