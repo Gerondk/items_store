@@ -46,6 +46,28 @@ class ItemDetailPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
+                  SizedBox(
+                    height: 300,
+                    child: CarouselView(
+                      itemExtent: 300,
+                      shrinkExtent: 300,
+                      children: List.generate(
+                        state.item.images.length,
+                        (index) => CachedNetworkImage(
+                          imageUrl: state.item.images[index],
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          errorWidget: (context, url, error) => const Icon(
+                            Icons.error,
+                            color: Colors.red,
+                            size: 100,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
