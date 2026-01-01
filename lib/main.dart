@@ -1,11 +1,12 @@
+import 'package:accessibility_tools/accessibility_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:items_store/routes/navigation.dart';
 
 import 'di/service_locator.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setupLocator();
+  await setupLocator();
 
   runApp(const MyApp());
 }
@@ -19,9 +20,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: router,
       title: 'Flutter Demo',
-      darkTheme: ThemeData.dark(
-        useMaterial3: true,
-      ),
+      builder: (context, child) {
+        return AccessibilityTools(
+          enableButtonsDrag: true,
+          checkFontOverflows: true,
+          checkImageLabels: true,
+          buttonsAlignment: .bottomRight,
+          child: child,
+        );
+      },
+      darkTheme: ThemeData.dark(useMaterial3: true),
     );
   }
 }

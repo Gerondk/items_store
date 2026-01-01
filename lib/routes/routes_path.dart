@@ -1,6 +1,7 @@
 enum RoutePath {
   itemDetail('/itemDetail'),
-  items('/items');
+  items('/items'),
+  bookmarkedItems('/bookmarkedItems');
 
   final String path;
   const RoutePath(this.path);

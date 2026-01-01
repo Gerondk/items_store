@@ -1,28 +1,43 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:items_store/features/items/presentation/item_detail/item_detail_bloc.dart';
-
-import 'item_detail_state.dart';
+import 'package:items_store/core/domain/bookmarked_item.dart';
+import 'package:items_store/features/items/items.dart';
 
 class ItemDetailPage extends StatelessWidget {
   const ItemDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    BookmarkedItem? bookmarkedItem;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          IconButton(
+            onPressed: () {
+              if (bookmarkedItem != null) {
+                context.read<ItemDetailBloc>().add(
+                  ItemDetailEventBookmarkItem(bookmarkedItem!),
+                );
+              }
+            },
+            icon: const Icon(Icons.bookmark_border),
+          ),
+        ],
       ),
       body: BlocBuilder<ItemDetailBloc, ItemDetailState>(
         builder: (context, state) {
           if (state is ItemDetailLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           } else if (state is ItemDetailLoaded) {
+            bookmarkedItem = BookmarkedItem(
+              id: state.item.id,
+              name: state.item.title,
+              description: state.item.description,
+            );
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -35,14 +50,10 @@ class ItemDetailPage extends StatelessWidget {
                       imageUrl: state.item.images.first,
                       fit: BoxFit.cover,
                       height: 400,
-                      placeholder: (context, url) => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                      errorWidget: (context, url, error) => const Icon(
-                        Icons.error,
-                        color: Colors.red,
-                        size: 100,
-                      ),
+                      placeholder: (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error, color: Colors.red, size: 100),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -56,9 +67,8 @@ class ItemDetailPage extends StatelessWidget {
                         (index) => CachedNetworkImage(
                           imageUrl: state.item.images[index],
                           fit: BoxFit.cover,
-                          placeholder: (context, url) => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) => const Icon(
                             Icons.error,
                             color: Colors.red,
@@ -76,17 +86,13 @@ class ItemDetailPage extends StatelessWidget {
                       children: [
                         Text(
                           state.item.title,
-                          style:
-                              Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
                           state.item.category.name,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          style: Theme.of(context).textTheme.bodyLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
                           state.item.description,
@@ -98,10 +104,8 @@ class ItemDetailPage extends StatelessWidget {
                         ),
                         Text(
                           '\$${state.item.price.toString()}',
-                          style:
-                              Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -110,9 +114,7 @@ class ItemDetailPage extends StatelessWidget {
               ),
             );
           } else {
-            return const Center(
-              child: Text('Something went wrong'),
-            );
+            return const Center(child: Text('Something went wrong'));
           }
         },
       ),
