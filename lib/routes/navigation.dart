@@ -1,15 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:items_store/features/bookmarks/presentation/bloc/bookmarked_bloc.dart';
-import 'package:items_store/features/bookmarks/presentation/bookmarked_items_page.dart';
+import 'package:items_store/features/bookmarks/presentation/bookmarked_with_provider.dart';
+import 'package:items_store/features/items/presentation/items_with_provider.dart';
 import 'package:items_store/routes/layout_scaffold.dart';
 import 'package:items_store/routes/routes_path.dart';
 
-import '../di/service_locator.dart';
-import '../features/items/items.dart';
+import '../features/items/presentation/item_detail/item_detail_with_provider.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: RoutePath.items.path,
@@ -23,23 +21,13 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: RoutePath.items.path,
-              builder: (context, state) => BlocProvider(
-                create: (context) =>
-                    locator<ItemsBloc>()..add(const ItemsEventGetItems()),
-                child: const ItemsPage(),
-              ),
+              builder: (context, state) => const ItemsWithProvider(),
               routes: <RouteBase>[
                 GoRoute(
                   path: '${RoutePath.itemDetail.path}/:itemId',
                   builder: (context, state) {
                     final itemId = state.pathParameters['itemId']!;
-                    return BlocProvider(
-                      create: (context) => locator<ItemDetailBloc>()
-                        ..add(
-                          ItemDetailEventGetItem(itemId: int.parse(itemId)),
-                        ),
-                      child: const ItemDetailPage(),
-                    );
+                    return ItemsDetailWithProvider(itemId: itemId);
                   },
                 ),
               ],
@@ -50,10 +38,7 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: RoutePath.bookmarkedItems.path,
-              builder: (context, state) => BlocProvider(
-                create: (context) => locator<BookmarkedBloc>(),
-                child: const BookmarkedItemsPage(),
-              ),
+              builder: (context, state) => const BookmarkedWithProvider(),
             ),
           ],
         ),
