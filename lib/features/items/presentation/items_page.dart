@@ -25,23 +25,26 @@ class ItemsPage extends StatelessWidget {
       ),
       body: BlocBuilder<ItemsBloc, ItemsState>(
         builder: (context, state) {
-          if (state is ItemsLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is ItemsLoaded) {
-            return ListView.builder(
-              itemCount: state.items.length,
-              itemBuilder: (context, index) {
-                final item = state.items[index];
-                return ItemsElement(
-                  itemId: item.id,
-                  title: item.title,
-                  description: item.description,
-                  imageUrl: item.images.first,
-                );
-              },
-            );
-          } else {
-            return const Center(child: Text('Something went wrong'));
+          switch (state) {
+            case ItemsInitial():
+              return const Center(child: Text('Initial'));
+            case ItemsLoading():
+              return const Center(child: CircularProgressIndicator());
+            case ItemsLoaded():
+              return ListView.builder(
+                itemCount: state.items.length,
+                itemBuilder: (context, index) {
+                  final item = state.items[index];
+                  return ItemsElement(
+                    itemId: item.id,
+                    title: item.title,
+                    description: item.description,
+                    imageUrl: item.images.first,
+                  );
+                },
+              );
+            case ItemsError():
+              return const Center(child: Text('Something went wrong'));
           }
         },
       ),
