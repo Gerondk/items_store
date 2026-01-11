@@ -1,4 +1,5 @@
 enum RoutePath {
+  login('/login'),
   itemDetail('/itemDetail'),
   items('/items'),
   bookmarkedItems('/bookmarkedItems');

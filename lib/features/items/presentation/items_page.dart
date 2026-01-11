@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../routes/routes_path.dart';
 import 'bloc/items_bloc.dart';
 import 'items_element.dart';
 
@@ -12,13 +14,19 @@ class ItemsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Items'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.go(RoutePath.login.path);
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
       ),
       body: BlocBuilder<ItemsBloc, ItemsState>(
         builder: (context, state) {
           if (state is ItemsLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           } else if (state is ItemsLoaded) {
             return ListView.builder(
               itemCount: state.items.length,
@@ -33,9 +41,7 @@ class ItemsPage extends StatelessWidget {
               },
             );
           } else {
-            return const Center(
-              child: Text('Something went wrong'),
-            );
+            return const Center(child: Text('Something went wrong'));
           }
         },
       ),

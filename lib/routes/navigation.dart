@@ -7,12 +7,17 @@ import 'package:items_store/features/items/presentation/items_with_provider.dart
 import 'package:items_store/routes/layout_scaffold.dart';
 import 'package:items_store/routes/routes_path.dart';
 
+import '../features/authentication/presentation/login_page.dart';
 import '../features/items/presentation/item_detail/item_detail_with_provider.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: RoutePath.items.path,
+  initialLocation: RoutePath.login.path,
   redirect: _redirectHandler,
   routes: <RouteBase>[
+    GoRoute(
+      path: RoutePath.login.path,
+      builder: (context, state) => const LoginPage(),
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
           LayoutScaffold(navigationShell),
