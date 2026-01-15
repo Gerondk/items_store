@@ -12,7 +12,8 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool enableAccessibilityTools;
+  const MyApp({super.key, this.enableAccessibilityTools = false});
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +21,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: router,
       title: 'Flutter Demo',
-      builder: (context, child) {
-        return AccessibilityTools(
-          enableButtonsDrag: true,
-          checkFontOverflows: true,
-          checkImageLabels: true,
-          buttonsAlignment: .bottomRight,
-          child: child,
-        );
-      },
+      builder: (context, child) => enableAccessibilityTools
+          ? AccessibilityTools(
+              enableButtonsDrag: true,
+              checkFontOverflows: true,
+              checkImageLabels: true,
+              buttonsAlignment: .bottomRight,
+              child: child!,
+            )
+          : child!,
+
       darkTheme: ThemeData.dark(useMaterial3: true),
     );
   }
