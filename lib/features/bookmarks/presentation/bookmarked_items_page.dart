@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:items_store/features/bookmarks/presentation/bloc/bookmarked_bloc.dart';
@@ -35,6 +36,19 @@ class BookmarkedItemsPage extends StatelessWidget {
                       item.description,
                       maxLines: 1,
                       overflow: .ellipsis,
+                    ),
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.fill,
+                        height: 60,
+                        width: 60,
+                        imageUrl: item.imageUrl,
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error, color: Colors.red),
+                      ),
                     ),
                     trailing: IconButton(
                       onPressed: () {
