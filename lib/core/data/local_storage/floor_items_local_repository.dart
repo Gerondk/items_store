@@ -17,6 +17,7 @@ class FloorItemsLocalRepository extends BookmarkedItemsRepository {
               id: e.id,
               name: e.title,
               description: e.description,
+              imageUrl: e.imageUrl,
             ),
           )
           .toList(),
@@ -30,6 +31,7 @@ class FloorItemsLocalRepository extends BookmarkedItemsRepository {
         id: item.id,
         title: item.name,
         description: item.description,
+        imageUrl: item.imageUrl,
       ),
     );
   }

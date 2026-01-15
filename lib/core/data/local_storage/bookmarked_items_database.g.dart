@@ -99,7 +99,7 @@ class _$BookmarkedItemsDatabase extends BookmarkedItemsDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `BookmarkedItemEntity` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `BookmarkedItemEntity` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `imageUrl` TEXT NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -125,7 +125,8 @@ class _$BookedItemsDao extends BookedItemsDao {
             (BookmarkedItemEntity item) => <String, Object?>{
                   'id': item.id,
                   'title': item.title,
-                  'description': item.description
+                  'description': item.description,
+                  'imageUrl': item.imageUrl
                 },
             changeListener);
 
@@ -144,7 +145,8 @@ class _$BookedItemsDao extends BookedItemsDao {
         mapper: (Map<String, Object?> row) => BookmarkedItemEntity(
             id: row['id'] as int,
             title: row['title'] as String,
-            description: row['description'] as String),
+            description: row['description'] as String,
+            imageUrl: row['imageUrl'] as String),
         queryableName: 'BookmarkedItemEntity',
         isView: false);
   }

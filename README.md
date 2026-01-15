@@ -37,6 +37,12 @@ This app uses the EscuelaJS fake store API:
     - `items/`: products list + product details (remote via Retrofit)
     - `bookmarks/`: bookmarked items UI/BLoC
 - `lib/core/data/local_storage/`: Floor database + entities/DAO for bookmarks
+## Screenchots on IOS
+
+<img src="screenshots/login.png" width="250" />
+<img src="screenshots/items_list.png" width="250" />
+<img src="screenshots/item_detail.png" width="250" />
+<img src="screenshots/bookmarked_items.png" width="250" />
 
 ## Getting Started
 

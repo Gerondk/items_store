@@ -37,6 +37,7 @@ class ItemDetailPage extends StatelessWidget {
               id: state.item.id,
               name: state.item.title,
               description: state.item.description,
+              imageUrl: state.item.images.first,
             );
             return SingleChildScrollView(
               child: Column(
